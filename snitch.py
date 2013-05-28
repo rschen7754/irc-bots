@@ -292,6 +292,12 @@ class Snitch(EternalClient):
             self.cursor.execute(
                 'SELECT * FROM rules WHERE channel=?', (channel,))
             rules = [Rule(*row) for row in self.cursor.fetchall()]
+            [self.msg(sender, '%s; %s; %s' % (r.wiki, r.type, r.pattern))
+                for r in rules]
+        elif action == 'listflood':
+            self.cursor.execute(
+                'SELECT * FROM rules WHERE channel=?', (channel,))
+            rules = [Rule(*row) for row in self.cursor.fetchall()]
             [self.msg(channel, '%s; %s; %s' % (r.wiki, r.type, r.pattern))
                 for r in rules]
         elif action == 'join':
@@ -311,7 +317,7 @@ class Snitch(EternalClient):
             self.part(channel)
         elif action == 'help':
             self.msg(channel,
-                     '!(stalk|ignore|unstalk|unignore|list|join|part|quit)')
+                     '!(stalk|ignore|unstalk|unignore|list|listflood|join|part|quit)')
         elif action == 'quit':
             if hostmask in settings.authorized_users:
                 log.msg('Quitting')
