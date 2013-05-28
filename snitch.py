@@ -38,6 +38,7 @@ CHANNEL_URLS = {'wikidata.wikipedia': 'www.wikidata',
                 'donate.wikimedia.org': 'donate.wikimedia',
                 'outreach.wikipedia': 'outreach.wikimedia',
                 'wikimania2013wiki': 'wikimania2013.wikimedia',
+                'wikimania2014wiki': 'wikimania2014.wikimedia',
                 'wikimediafoundation.org': 'wikimediafoundation',
                 }
 
@@ -294,8 +295,8 @@ class Snitch(EternalClient):
             [self.msg(channel, '%s; %s; %s' % (r.wiki, r.type, r.pattern))
                 for r in rules]
         elif action == 'join':
-            if re.search(r'(mj94)', params[0], re.I):
-                self.msg(channel, 'FUCK OFF.')
+            if hostmask not in settings.authorized_users:
+                self.msg(channel, 'You are not authorized to do this.')
             elif not params:
                 self.msg(channel, '!join (channel)')
             else:
@@ -303,6 +304,8 @@ class Snitch(EternalClient):
                     'INSERT OR IGNORE INTO channels VALUES (?)', (params[0],))
                 self.join(params[0])
         elif action == 'part':
+            if hostmask not in settings.authorized_users:
+                self.msg(channel, 'You are not authorized to do this.')
             self.cursor.execute(
                 'DELETE FROM channels WHERE name=?', (channel,))
             self.part(channel)
