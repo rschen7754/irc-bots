@@ -292,8 +292,9 @@ class Snitch(EternalClient):
             self.cursor.execute(
                 'SELECT * FROM rules WHERE channel=?', (channel,))
             rules = [Rule(*row) for row in self.cursor.fetchall()]
-            [self.msg(user, '%s %s %s' % (r.wiki, r.type, r.pattern))
-                for r in rules]
+            [if r.ignore==true: self.msg(user, '!ignore %s %s %s' % (r.wiki, r.type, r.pattern))
+            else: self.msg(user, '!stalk %s %s %s' % (r.wiki, r.type, r.pattern))
+            for r in rules]
         elif action == 'listflood':
             self.cursor.execute(
                 'SELECT * FROM rules WHERE channel=?', (channel,))
