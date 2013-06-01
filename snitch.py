@@ -1,5 +1,5 @@
 #! /usr/bin/env python2.6
-# Public domain; bjweeks, MZMcBride; 2011
+# Public domain; bjweeks, MZMcBride; 2011; Rschen7754, 2013
 
 import collections
 import re
@@ -84,7 +84,7 @@ class EternalClient(irc.IRCClient):
 
 class Snatch(EternalClient):
     realname = 'snerk'
-    nickname = 'snatch'
+    nickname = '%s' % (settings.nickname)
 
     def connectionMade(self):
         EternalClient.connectionMade(self)
@@ -176,8 +176,8 @@ class Snatch(EternalClient):
         self.transport.loseConnection()
 
 class Snitch(EternalClient):
-    realname = 'snerk'
-    nickname = 'snitch'
+    realname = 'snitchbot'
+    nickname = '%s' % (settings.nickname)
     password = ':%s %s' % (nickname, settings.nickserv_password)
     lineRate = 1
 

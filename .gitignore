@@ -1,0 +1,3 @@
+*.pyc
+settings.py
+snitch.db
