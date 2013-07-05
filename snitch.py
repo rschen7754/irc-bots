@@ -309,7 +309,7 @@ class Snitch(EternalClient):
                 self.cursor.execute(
                     'INSERT OR IGNORE INTO channels VALUES (?)', (params[0],))
                 self.join(params[0])
-        elif action == 'part':
+        elif action == 'part' or action == 'leave':
             if hostmask not in settings.authorized_users:
                 self.msg(channel, 'You are not authorized to do this.')
             self.cursor.execute(
