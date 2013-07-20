@@ -165,12 +165,12 @@ class Snatch(EternalClient):
                     ignore.append(rule.channel)
 
     def joinWait(self, channel):
-        time.sleep(.01)
+        time.sleep(.02)
         self.join(channel)
 
     def partWait(self, channel):
-        time.sleep(.01)
-        self.join(channel)
+        time.sleep(.02)
+        self.part(channel)
 
     def syncChannels(self):
         log.msg('Syncing snatch\'s channels')
