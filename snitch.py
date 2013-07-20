@@ -103,6 +103,7 @@ class Snatch(EternalClient):
 
     def signedOn(self):
         self.syncChannels()
+        self.msg(channel, 'All ready!')
 
     def joined(self, channel):
         log.msg('Snatch joined %s' % channel)
@@ -164,7 +165,7 @@ class Snatch(EternalClient):
                     ignore.append(rule.channel)
 
     def joinWait(self, channel):
-        time.sleep(.05)
+        time.sleep(.02)
         self.join(channel)
 
     def partWait(self, channel):
