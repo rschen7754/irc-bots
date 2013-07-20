@@ -6,6 +6,7 @@ import re
 import sqlite3
 import sre_constants
 import urlparse
+import time
 
 from twisted.internet import protocol, reactor, task
 from twisted.python import log
@@ -102,6 +103,7 @@ class Snatch(EternalClient):
 
     def signedOn(self):
         self.syncChannels()
+        self.msg(channel, 'All ready!')
 
     def joined(self, channel):
         log.msg('Snatch joined %s' % channel)
@@ -162,13 +164,21 @@ class Snatch(EternalClient):
                     snitch.tattle(rule, diff)
                     ignore.append(rule.channel)
 
+    def joinWait(self, channel):
+        time.sleep(.01)
+        self.join(channel)
+
+    def partWait(self, channel):
+        time.sleep(.01)
+        self.join(channel)
+
     def syncChannels(self):
         log.msg('Syncing snatch\'s channels')
         self.cursor.execute(
             'SELECT wiki FROM rules')
         channels = set('#%s' % row[0] for row in self.cursor.fetchall())
-        [self.join(channel) for channel in (channels - self.channels)]
-        [self.part(channel) for channel in (self.channels - channels)]
+        [self.joinWait(channel) for channel in (channels - self.channels)]
+        [self.partWait(channel) for channel in (self.channels - channels)]
 
     def quit(self):
         irc.IRCClient.quit(self)
