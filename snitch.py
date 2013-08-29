@@ -7,7 +7,7 @@ import sqlite3
 import sre_constants
 import urlparse
 
-from twisted.internet import protocol, reactor, task
+from twisted.internet import protocol, reactor, task, defer
 from twisted.python import log
 from twisted.words.protocols import irc
 
