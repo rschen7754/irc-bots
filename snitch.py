@@ -111,7 +111,7 @@ class Snatch(EternalClient):
     def sleep(self, secs, channel):
    		d = self.join(channel)
    		e = 10000000000
-   		for x in range (0,1000000000):
+   		for x in range (0,1000000):
    			e = e/1.1
    		return d
 
