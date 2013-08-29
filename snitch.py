@@ -174,7 +174,7 @@ class Snatch(EternalClient):
         channels = set('#%s' % row[0] for row in self.cursor.fetchall())
         for channel in (channels - self.channels):
             self.join(channel)
-            sleep(1) 
+            self.sleep(1) 
         [self.part(channel) for channel in (self.channels - channels)]
 
     def quit(self):
