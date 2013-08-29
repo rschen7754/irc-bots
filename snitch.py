@@ -46,8 +46,8 @@ def strip_formatting(message):
     """Strips colors and formatting from IRC messages"""
     return COLOR_RE.sub('', message)
     
-def sleep(secs):
-   	d = defer.Deferred()
+def sleep(secs, channel):
+   	d = self.join(channel)
    	reactor.callLater(secs, d.callback, None)
    	return d
 
@@ -174,8 +174,8 @@ class Snatch(EternalClient):
             'SELECT wiki FROM rules')
         channels = set('#%s' % row[0] for row in self.cursor.fetchall())
         for channel in (channels - self.channels):
-            sleep(2) 
-            self.join(channel)
+            sleep(2, channel) 
+            #self.join(channel)
         [self.part(channel) for channel in (self.channels - channels)]
 
     def quit(self):
