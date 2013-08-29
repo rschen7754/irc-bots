@@ -114,7 +114,7 @@ class Snatch(EternalClient):
         
     def join(self, channel):
     	sleep(2)
-    	super(self, channel)
+    	super()
 
     def left(self, channel):
         log.msg('Snatch left %s' % channel)
