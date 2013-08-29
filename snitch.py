@@ -113,7 +113,7 @@ class Snatch(EternalClient):
    		e = 10000000000
    		for x in range (0,1000000):
    			e = e/1.1
-   		return d
+   		return e
 
     def left(self, channel):
         log.msg('Snatch left %s' % channel)
