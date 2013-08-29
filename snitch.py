@@ -46,10 +46,6 @@ def strip_formatting(message):
     """Strips colors and formatting from IRC messages"""
     return COLOR_RE.sub('', message)
     
-def sleep(secs, channel):
-   	d = self.join(channel)
-   	reactor.callLater(secs, d.callback, None)
-   	return d
 
 ACTION_RE = re.compile(r'\[\[(.+)\]\] (?P<log>.+)  \* (?P<user>.+) \*  (?P<summary>.+)')
 
@@ -111,6 +107,11 @@ class Snatch(EternalClient):
     def joined(self, channel):
         log.msg('Snatch joined %s' % channel)
         self.channels.add(channel)
+        
+    def sleep(self, secs, channel):
+   		d = self.join(channel)
+   		reactor.callLater(secs, d.callback, None)
+   		return d
 
     def left(self, channel):
         log.msg('Snatch left %s' % channel)
@@ -174,7 +175,7 @@ class Snatch(EternalClient):
             'SELECT wiki FROM rules')
         channels = set('#%s' % row[0] for row in self.cursor.fetchall())
         for channel in (channels - self.channels):
-            sleep(2, channel) 
+            self.sleep(2, channel) 
             #self.join(channel)
         [self.part(channel) for channel in (self.channels - channels)]
 
