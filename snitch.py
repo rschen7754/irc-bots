@@ -110,7 +110,7 @@ class Snatch(EternalClient):
         
     def sleep(self, secs, channel):
    		d = self.join(channel)
-   		reactor.callLater(secs, d, None)
+   		reactor.callLater(secs, d)
    		return d
 
     def left(self, channel):
