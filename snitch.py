@@ -161,6 +161,11 @@ class Snatch(EternalClient):
                 for snitch in self.factory.snitches:
                     snitch.tattle(rule, diff)
                     ignore.append(rule.channel)
+                    
+    def sleep(secs):
+   		d = defer.Deferred()
+   		reactor.callLater(secs, d.callback, None)
+   		return d
 
     def syncChannels(self):
         log.msg('Syncing snatch\'s channels')
