@@ -173,8 +173,8 @@ class Snatch(EternalClient):
             'SELECT wiki FROM rules')
         channels = set('#%s' % row[0] for row in self.cursor.fetchall())
         for channel in (channels - self.channels):
+            self.sleep(2) 
             self.join(channel)
-            self.sleep(1) 
         [self.part(channel) for channel in (self.channels - channels)]
 
     def quit(self):
