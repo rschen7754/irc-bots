@@ -111,6 +111,10 @@ class Snatch(EternalClient):
     def joined(self, channel):
         log.msg('Snatch joined %s' % channel)
         self.channels.add(channel)
+        
+    def join(self, channel):
+    	sleep(2)
+    	super.join(self, channel)
 
     def left(self, channel):
         log.msg('Snatch left %s' % channel)
