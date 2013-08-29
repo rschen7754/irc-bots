@@ -45,6 +45,11 @@ CHANNEL_URLS = {'wikidata.wikipedia': 'www.wikidata',
 def strip_formatting(message):
     """Strips colors and formatting from IRC messages"""
     return COLOR_RE.sub('', message)
+    
+def sleep(secs):
+   	d = defer.Deferred()
+   	reactor.callLater(secs, d.callback, None)
+   	return d
 
 ACTION_RE = re.compile(r'\[\[(.+)\]\] (?P<log>.+)  \* (?P<user>.+) \*  (?P<summary>.+)')
 
@@ -162,10 +167,6 @@ class Snatch(EternalClient):
                     snitch.tattle(rule, diff)
                     ignore.append(rule.channel)
                     
-    def sleep(self, secs):
-   		d = defer.Deferred()
-   		reactor.callLater(secs, d.callback, None)
-   		return d
 
     def syncChannels(self):
         log.msg('Syncing snatch\'s channels')
@@ -173,7 +174,7 @@ class Snatch(EternalClient):
             'SELECT wiki FROM rules')
         channels = set('#%s' % row[0] for row in self.cursor.fetchall())
         for channel in (channels - self.channels):
-            self.sleep(2) 
+            sleep(2) 
             self.join(channel)
         [self.part(channel) for channel in (self.channels - channels)]
 
