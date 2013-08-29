@@ -162,7 +162,7 @@ class Snatch(EternalClient):
                     snitch.tattle(rule, diff)
                     ignore.append(rule.channel)
                     
-    def sleep(secs):
+    def sleep(self, secs):
    		d = defer.Deferred()
    		reactor.callLater(secs, d.callback, None)
    		return d
