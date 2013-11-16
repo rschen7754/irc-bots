@@ -320,9 +320,10 @@ class Snitch(EternalClient):
         elif action == 'part' or action == 'leave':
             if hostmask not in settings.authorized_users:
                 self.msg(channel, 'You are not authorized to do this.')
-            self.cursor.execute(
+            else:
+                self.cursor.execute(
                 'DELETE FROM channels WHERE name=?', (channel,))
-            self.part(channel)
+                self.part(channel)
         elif action == 'help':
             self.msg(channel,
                      '!(stalk|ignore|unstalk|unignore|list|listflood|join|part|quit)')
