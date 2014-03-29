@@ -354,7 +354,7 @@ class Snitch(EternalClient):
             fixed_url = diff['url'].replace(url.netloc, fixed_netloc)
             final_url = fixed_url.replace('http://', 'https://')
             self.msg(rule.channel,
-                     '; '.join(('[[%s]]' % diff['page'],
+                     '; '.join(('^C14[[^C07%s^C14]]^C01' % diff['page'],
                                 diff['user'],
                                 diff['summary'],
                                 final_url)))
